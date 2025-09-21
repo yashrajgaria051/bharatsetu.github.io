@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BharatSetu AI - Producer Dashboard</title>
+    <style>
+        :root {
+            --primary: #2E86C1;
+            --secondary: #27AE60;
+            --accent: #F39C12;
+            --light: #ECF0F1;
+            --dark: #2C3E50;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7f9;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 15px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo span {
+            color: var(--accent);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 20px;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: var(--accent);
+        }
+        
+        .user-profile {
+            display: flex;
+            align-items: center;
+        }
+        
+        .user-profile img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+            border: 2px solid white;
+        }
+        
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 20px 0;
+        }
+        
+        .welcome-box {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            text-align: center;
+        }
+        
+        .stat-card h3 {
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+        
+        .stat-card .value {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--secondary);
+        }
+        
+        .action-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .action-card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            transition: transform 0.3s;
+            cursor: pointer;
+        }
+        
+        .action-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .action-card h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .action-card h3 i {
+            margin-right: 10px;
+            color: var(--accent);
+        }
+        
+        .btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .btn:hover {
+            background: #1c6ea4;
+        }
+        
+        .btn-secondary {
+            background: var(--secondary);
+        }
+        
+        .btn-secondary:hover {
+            background: #219653;
+        }
+        
+        .market-insights {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+        }
+        
+        .market-insights h2 {
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+        
+        .insight-item {
+            padding: 15px;
+            border-left: 4px solid var(--accent);
+            background-color: #FFF9E6;
+            margin-bottom: 15px;
+            border-radius: 0 4px 4px 0;
+        }
+        
+        .ai-recommendation {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+            border-top: 5px solid var(--accent);
+        }
+        
+        .ai-recommendation h2 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .ai-recommendation h2 i {
+            margin-right: 10px;
+            color: var(--accent);
+        }
+        
+        .recommendation-content {
+            display: flex;
+            align-items: center;
+        }
+        
+        .recommendation-text {
+            flex: 2;
+        }
+        
+        .recommendation-action {
+            flex: 1;
+            text-align: right;
+        }
+        
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 30px 0;
+            text-align: center;
+            margin-top: 50px;
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+        
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+            margin-bottom: 20px;
+        }
+        
+        .footer-section h3 {
+            margin-bottom: 15px;
+            color: var(--accent);
+        }
+        
+        .language-selector {
+            background: rgba(255,255,255,0.1);
+            padding: 5px 10px;
+            border-radius: 4px;
+            border: none;
+            color: white;
+            margin-top: 10px;
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 15px;
+                justify-content: center;
+            }
+            
+            .dashboard-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .recommendation-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .recommendation-action {
+                margin-top: 15px;
+                text-align: center;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <i class="fas fa-bridge"></i> Bharat<span>Setu</span> AI
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#"><i class="fas fa-home"></i> Dashboard</a></li>
+                    <li><a href="#"><i class="fas fa-box"></i> My Products</a></li>
+                    <li><a href="#"><i class="fas fa-truck"></i> Logistics</a></li>
+                    <li><a href="#"><i class="fas fa-rupee-sign"></i> Finance</a></li>
+                </ul>
+            </nav>
+            <div class="user-profile">
+                <img src="https://ui-avatars.com/api/?name=Rajesh+Kumar&background=27AE60&color=fff" alt="User">
+                <span>Rajesh Kumar</span>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="dashboard-header">
+            <h1>Producer Dashboard</h1>
+            <select class="language-selector">
+                <option>English</option>
+                <option>Hindi</option>
+                <option>Marathi</option>
+                <option>Tamil</option>
+                <option>Telugu</option>
+            </select>
+        </div>
+
+        <div class="welcome-box">
+            <h2>Welcome back, Rajesh!</h2>
+            <p>Your tomato harvest is ready in 5 days. Based on market trends, we recommend prioritizing buyers in Mumbai for best prices.</p>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h3>Active Listings</h3>
+                <p class="value">12</p>
+            </div>
+            <div class="stat-card">
+                <h3>Monthly Revenue</h3>
+                <p class="value">₹86,500</p>
+            </div>
+            <div class="stat-card">
+                <h3>Orders This Month</h3>
+                <p class="value">24</p>
+            </div>
+            <div class="stat-card">
+                <h3>Logistics Savings</h3>
+                <p class="value">₹12,300</p>
+            </div>
+        </div>
+
+        <div class="action-cards">
+            <div class="action-card">
+                <h3><i class="fas fa-plus-circle"></i> Add New Product</h3>
+                <p>List your agricultural produce or manufactured goods on the marketplace</p>
+                <button class="btn">List Product</button>
+            </div>
+            <div class="action-card">
+                <h3><i class="fas fa-truck-loading"></i> Schedule Logistics</h3>
+                <p>Arrange transportation for your upcoming deliveries</p>
+                <button class="btn">Book Transport</button>
+            </div>
+            <div class="action-card">
+                <h3><i class="fas fa-hand-holding-usd"></i> Access Finance</h3>
+                <p>Apply for working capital loans based on your sales history</p>
+                <button class="btn">View Options</button>
+            </div>
+        </div>
+
+        <div class="ai-recommendation">
+            <h2><i class="fas fa-lightbulb"></i> AI Recommendation</h2>
+            <div class="recommendation-content">
+                <div class="recommendation-text">
+                    <p><strong>Tomato Price Alert:</strong> Our AI predicts a 22% price increase in Mumbai markets over the next week due to increased demand and supply chain disruptions in Nashik. We recommend prioritizing Mumbai-bound orders for maximum profit.</p>
+                    <p>Buyer "FreshMart Mumbai" is looking for 2000kg of tomatoes with immediate pickup.</p>
+                </div>
+                <div class="recommendation-action">
+                    <button class="btn btn-secondary">Accept Recommendation</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="market-insights">
+            <h2>Market Insights</h2>
+            <div class="insight-item">
+                <p><strong>Transport Optimization:</strong> A truck heading to Delhi has 40% empty capacity. You can add your goods for 15% lower transportation cost.</p>
+            </div>
+            <div class="insight-item">
+                <p><strong>Weather Alert:</strong> Unexpected rains predicted in your region in 3 days. Consider moving your harvest schedule earlier.</p>
+            </div>
+            <div class="insight-item">
+                <p><strong>Government Scheme:</strong> You're eligible for 50% subsidy on cold storage facilities. Apply before March 31.</p>
+            </div>
+        </div>
+
+        <div class="ai-recommendation">
+            <h2><i class="fas fa-route"></i> Logistics Optimization</h2>
+            <div class="recommendation-content">
+                <div class="recommendation-text">
+                    <p><strong>Optimal Route Found:</strong> For your shipment to Mumbai, we've found a route that avoids traffic near Pune, saves 3 hours of travel time, and reduces fuel costs by 18%. The truck will arrive at your farm in 2 hours.</p>
+                </div>
+                <div class="recommendation-action">
+                    <button class="btn">Confirm Pickup</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container footer-content">
+            <div class="footer-section">
+                <h3>Contact Support</h3>
+                <p>24/7 Helpline: 1800-123-4567</p>
+                <p>WhatsApp: +91 9876543210</p>
+                <p>Email: support@bharatsetu.ai</p>
+            </div>
+            <div class="footer-section">
+                <h3>Services</h3>
+                <p>Marketplace</p>
+                <p>Logistics</p>
+                <p>Financing</p>
+                <p>Insurance</p>
+            </div>
+            <div class="footer-section">
+                <h3>Download Our App</h3>
+                <p>Available in Hindi and 10 other languages</p>
+                <p>Works on basic smartphones</p>
+                <p>USSD support for feature phones</p>
+            </div>
+        </div>
+        <p>&copy; 2023 BharatSetu AI. Building Bridges Across India's Supply Chain.</p>
+    </footer>
+</body>
+</html>
